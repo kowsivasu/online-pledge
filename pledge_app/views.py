@@ -114,10 +114,14 @@ def pledge_page(request):
             pledge = form.save(commit=False)
             if selectedLanguage == "TA":
                 pledge.pledge_text = pledgeCreateObj.tamilPledgeText
+                pledge.pledgeName = pledgeCreateObj.tamilPledgeName
             elif selectedLanguage == "HI":
                 pledge.pledge_text = pledgeCreateObj.hindiPledgeText
+                pledge.pledgeName = pledgeCreateObj.hindiPledgeName
             else:
                 pledge.pledge_text = pledgeCreateObj.pledgeText
+                pledge.pledgeName = pledgeCreateObj.pledgeName
+
 
             pledge = form.save()
             return redirect("thankyou", pledgeCreateObj_id=pledgeCreateObj.id, pledge_id=pledge.id)
@@ -309,6 +313,8 @@ def pledgeUpdateFun(request, id):
         pledge.language = request.POST.get("language")
         pledge.tamilPledgeText = request.POST.get("tamilPledgeText")
         pledge.hindiPledgeText = request.POST.get("hindiPledgeText")
+        pledge.tamilPledgeName = request.POST.get("tamilPledgeName")
+        pledge.hindiPledgeName = request.POST.get("hindiPledgeName")
 
         if request.FILES.get("logo1"):
             pledge.logo1 = request.FILES.get("logo1")

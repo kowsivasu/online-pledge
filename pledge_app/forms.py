@@ -43,7 +43,7 @@ class UserForm(forms.ModelForm):
 class PledgeCreateForm(forms.ModelForm):
     class Meta:
         model = pledgeCreate
-        fields = ['pledgeName', 'logo1', 'logo2', 'logo3', 'pledgeText', 'checkboxText', 'tamilPledgeText', 'hindiPledgeText']
+        fields = ['pledgeName', 'logo1', 'logo2', 'logo3', 'pledgeText', 'checkboxText', 'tamilPledgeText', 'hindiPledgeText', 'tamilPledgeName', 'hindiPledgeName']
         widgets = {
             # 'pledgeName': CKEditorWidget(config_name='default'),
             'logo1': forms.ClearableFileInput(attrs={'class': 'form-control'}),
@@ -53,5 +53,7 @@ class PledgeCreateForm(forms.ModelForm):
             'checkboxText':forms.Textarea(attrs={'class': 'form-control', 'style': 'height: 50px;'}),
             'tamilPledgeText': forms.Textarea(attrs={'class': 'form-control'}),
             'hindiPledgeText': forms.Textarea(attrs={'class': 'form-control'}),
+            'tamilPledgeName': forms.Textarea(attrs={'class': 'form-control'}),
+            'hindiPledgeName': forms.Textarea(attrs={'class': 'form-control'}),
 
         }

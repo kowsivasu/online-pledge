@@ -123,7 +123,7 @@ h1{
     <div class=content>
   <div class="wrapper-1">
     <div class="wrapper-2">
-      <h2>{{ pledgeCreateObj.pledgeName|striptags }}</h2>
+      <h2>{{pledge.pledgeName|striptags }}</h2>
       <p>{{pledge.pledge_text|striptags|safe}}</p>
       <a href="/" class="go-home">Go Home</a>
      <a href="{% url 'download_certificate' pledge.id %}" class="generate-pdf">

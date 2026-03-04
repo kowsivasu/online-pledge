@@ -123,7 +123,6 @@
                         <br>
                         <!-- email -->
                         <label class="form-label">Pledge Text</label>
-
                         <textarea 
                             class="form-control" 
                             rows="8" 
@@ -131,30 +130,46 @@
                             readonly>{{ pledge.pledgeText|striptags|cut:"&nbsp;" }}</textarea>
                                                 <br>
 
-                                                <!-- tamil pledge Text -->
-<label class="form-label">Tamil Pledge Text</label>
-
+                        <!-- tamil pledge Text -->
+                        <label class="form-label">Tamil Pledge Text</label>
                         <textarea 
                             class="form-control" 
                             rows="8" 
                             style="width: 500px;"
-                            readonly>{{ pledge.tamilPledgeText|striptags }}</textarea>
-                                                <br>
+                            readonly>{{ pledge.tamilPledgeText|striptags }}
+                        </textarea>
+                        <br>
 
-
-                                                <!-- hindi pledge -->
-                                                 <label class="form-label">Hindi Pledge Text</label>
-
+                      <!-- hindi pledge -->
+                        <label class="form-label">Hindi Pledge Text</label>
                         <textarea 
                             class="form-control" 
                             rows="8" 
                             style="width: 500px;"
-                            readonly>{{ pledge.hindiPledgeText|striptags }}</textarea>
-                                                <br>
+                            readonly>{{ pledge.hindiPledgeText|striptags }}
+                        </textarea>
+                        <br>
+
+                        <label class="form-label">Tamil Pledge Name</label>
+                        <textarea 
+                            class="form-control" 
+                            rows="8" 
+                            style="width: 500px;"
+                            readonly>{{ pledge.tamilPledgeName|striptags }}
+                        </textarea>
+                        <br>
+
+                        <label class="form-label">Hindi Pledge Name</label>
+                        <textarea 
+                            class="form-control" 
+                            rows="8" 
+                            style="width: 500px;"
+                            readonly>{{ pledge.hindiPledgeName|striptags }}
+                        </textarea>
+                        <br>
 
 
-
-                                                <label>LOGO - 1</label>
+                        <label>LOGO - 1</label>
                         <br>
                       {% if pledge.logo1 %}
                           <img src="{{ pledge.logo1.url }}" alt="Logo" width="120" height="120">

@@ -22,6 +22,7 @@ class Pledge(models.Model):
                                     ('HI', 'Hindi'),],
                                     default='EN'
                                     )
+    pledgeName = RichTextField(null=True, blank=True)
         
     def __str__(self):
         return self.name
@@ -46,5 +47,8 @@ class pledgeCreate(models.Model):
     checkboxText = models.CharField(max_length=2000, blank=True)
     tamilPledgeText = RichTextField(null=True, blank=True)
     hindiPledgeText = RichTextField(null=True, blank=True)
+    tamilPledgeName = RichTextField(null=True, blank=True)
+    hindiPledgeName = RichTextField(null=True, blank=True)
+
     
     
