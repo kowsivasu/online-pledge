@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environment Pledge</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f7f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            min-height: 100vh;
+            margin: 0;
+
+            padding: 20px 0;   /* 👈 add this line */
+        }
+
+        .box {
+            background: white;
+            width: 432px;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+        }
+
+        input {
+            width: 300px;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid gray;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        /* ✅ Creepy Button */
+        .creepy-btn {
+            position: relative;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 30px;
+        }
+
+        .creepy-btn__cover {
+            display: block;
+            padding: 15px 45px;
+            background: #1c4a1d;
+            color: white;
+            font-size: 16px;
+            border-radius: 35px;
+            font-weight: bold;
+            border: 3px solid black;
+
+            /* transform-origin: left center; */
+            transition: 0.3s;
+        }
+
+        .creepy-btn:hover .creepy-btn__cover {
+            transform: rotate(-12deg);
+        }
+
+        .creepy-btn::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: black;
+            border-radius: 35px;
+            z-index: -1;
+            transform: translateY(10px);
+        }
+
+        .creepy-btn__eyes {
+            position: absolute;
+            right: 20px;
+            bottom: -18px;
+            display: flex;
+            gap: 8px;
+
+            opacity: 0;
+            transform: translateY(10px);
+            transition: 0.3s ease;
+        }
+
+        .creepy-btn:hover .creepy-btn__eyes {
+            opacity: 1;              /* 👀 visible */
+            transform: translateY(0);
+            
+    
+        }
+
+        .creepy-btn__eye {
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid black;
+        }
+
+        .creepy-btn__pupil {
+            width: 7px;
+            height: 7px;
+            background: black;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .pledge-form {
+            width: 100%;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            /* justify-content: space-between; */
+            margin-bottom: 10px;
+        }
+        .input-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            min-height: 18px;   /* prevents layout jump */
+            margin-top: 4px;
+        }
+        .form-row label {
+            /* width: 150px; */
+            /* text-align: left; */
+            min-width: 120px;
+            font-weight: bold;
+        }
+
+        .form-row input,
+        .form-row select {
+            width: 275px;
+            padding: 10px;
+            border-radius: 25px;
+            border: 1px solid gray;
+            
+        }
+
+        .custom-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.custom-check input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>{{pledgeCreateObj.pledgeName}}</h1>
+        <!-- <p>I pledge to keep my environment clean and green.</p> -->
+
+        <form method="POST" class="pledge-form">
+            {% csrf_token %}
+
+            <div class="form-row">
+                <label>Name | नाम :</label>
+                <div class="input-wrapper">
+                    {{ form.name }}
+                    <small id="nameError" class="error-message"></small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>Email | ईमेल:</label>
+                <div class="input-wrapper">
+                {{ form.email }}
+                <small id="emailError" class="error-message"></small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>Department | विभाग:</label>
+                <div class="input-wrapper">
+                    {{ form.department }}
+                    <small id="departmentError" class="error-message"></small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>Designationn | पदनाम:</label>
+                <div class="input-wrapper">
+                    {{ form.designation }}
+                    <small id="designationError" class="error-message"></small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>Employee Code | कर्मचारी कोड:</label>
+                <div class="input-wrapper">
+                    {{ form.emp_code }}
+                    <small id="empCodeError" class="error-message"></small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>State | राज्य:</label>
+                    <div class="input-wrapper">
+                        {{ form.state }}
+                        <small id="stateError" class="error-message"></small>
+                    </div>
+            </div>
+
+            <div class="form-row">
+                <label>District | जिला:</label>
+                <div class="input-wrapper">
+                    {{ form.district }}
+                    <small id="districtError" class="error-message"></small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>City | शहर:</label>
+                <div class="input-wrapper">
+                    {{ form.city }}
+                    <small id="cityError" class="error-message"></small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>Place | स्थान:</label>
+                <div class="input-wrapper">
+                    {{ form.place }}
+                    <small id="placeError" class="error-message"></small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>Language | भाषा:</label>
+                {{ form.pledgeLanguage }}
+            </div>
+            <br>
+            <div class="col-12">
+                <div class="form-check custom-check">
+                    <input
+                        type="checkbox"
+                        id="invalidCheck"
+                        name="checkboxText"
+                        value="{{ pledgeCreateObj.checkboxText }}"
+                        required
+                    >
+                    <label for="invalidCheck">{{ pledgeCreateObj.checkboxText }}</label>
+                </div>
+            </div>
+
+            <!-- Creepy Button stays same -->
+            <button type="submit" class="creepy-btn">
+                <span class="creepy-btn__eyes">
+                    <span class="creepy-btn__eye">
+                        <span class="creepy-btn__pupil"></span>
+                    </span>
+                    <span class="creepy-btn__eye">
+                        <span class="creepy-btn__pupil"></span>
+                    </span>
+                </span>
+                <span class="creepy-btn__cover">I Pledge</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- ✅ JavaScript Eye Movement -->
+
+    <script>
+        const button = document.querySelector(".creepy-btn");
+        const pupils = document.querySelectorAll(".creepy-btn__pupil");
+
+        button.addEventListener("mousemove", function (e) {
+            const rect = button.getBoundingClientRect();
+
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const moveX = (x - rect.width / 2) / 15;
+            const moveY = (y - rect.height / 2) / 15;
+
+            pupils.forEach(pupil => {
+                pupil.style.transform =
+                    `translate(-50%, -50%) translate(${moveX}px, ${moveY}px)`;
+            });
+        });
+
+        button.addEventListener("mouseleave", function () {
+            pupils.forEach(pupil => {
+                pupil.style.transform = "translate(-50%, -50%)";
+            });
+        });
+
+        button.addEventListener("mouseenter", () => {
+            button.querySelector(".creepy-btn__eyes").style.opacity = "1";
+        });
+
+        button.addEventListener("mouseleave", () => {
+            button.querySelector(".creepy-btn__eyes").style.opacity = "0";
+        });
+
+    </script>
+    <!-- name error -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.querySelector("form");
+    const nameInput = document.getElementById("name");
+    const nameError = document.getElementById("nameError");
+            function isValidName(value) {
+            const pattern = /^[A-Za-z\s]+$/;
+            return pattern.test(value);
+        }
+    // ✅ Validate when leaving the field
+    nameInput.addEventListener("blur", function () {
+    const namelValue = nameInput.value.trim();
+
+        // alert(namelValue)
+        if (namelValue === "") {
+            nameError.textContent = "Name is required.";
+        }
+        else if (!isValidName(namelValue)) {
+                nameError.textContent = "Name must contain only letters.";
+            }
+        else if (nameInput.value.trim().length < 3) {
+            nameError.textContent = "Name must be at least 3 characters long.";
+        } else {
+            nameError.textContent = "";
+        }
+    });
+
+    // ✅ Also validate on submit (extra safety)
+    form.addEventListener("submit", function (event) {
+        if (nameInput.value.trim().length < 3) {
+            event.preventDefault();
+            nameError.textContent = "Name must be at least 3 characters long.";
+        }
+    });
+
+    });
+    </script>
+    <!-- email error -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+        const form = document.querySelector("form");
+        const emailInput = document.getElementById("email");
+        const emailError = document.getElementById("emailError");
+
+        // Email regex pattern
+        function isValidEmail(email) {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailPattern.test(email);
+        }
+
+        // ✅ Validate on blur (when leaving field)
+        emailInput.addEventListener("blur", function () {
+            const emailValue = emailInput.value.trim();
+
+            if (emailValue === "") {
+                emailError.textContent = "Email is required.";
+            } 
+            else if (!isValidEmail(emailValue)) {
+                emailError.textContent = "Enter a valid email address.";
+            } 
+            else {
+                emailError.textContent = "";
+            }
+        });
+
+        // ✅ Validate on submit
+        form.addEventListener("submit", function (event) {
+            const emailValue = emailInput.value.trim();
+
+            if (emailValue === "" || !isValidEmail(emailValue)) {
+                event.preventDefault();
+                emailError.textContent = "Enter a valid email address.";
+            }
+        });
+
+    });
+    </script>
+    <!-- department error -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+        const form = document.querySelector("form");
+        const departmentInput = document.getElementById("department");
+        const departmentError = document.getElementById("departmentError");
+
+        // Only letters and spaces allowed
+        function isValidDepartment(value) {
+            const pattern = /^[A-Za-z\s]+$/;
+            return pattern.test(value);
+        }
+
+        // ✅ Validate when leaving field
+        departmentInput.addEventListener("blur", function () {
+
+            const value = departmentInput.value.trim();
+
+            if (value === "") {
+                departmentError.textContent = "Department is required.";
+            }
+            // else if (value.length < 3) {
+            //     departmentError.textContent = "Department must be at least 3 characters.";
+            // }
+            else if (!isValidDepartment(value)) {
+                departmentError.textContent = "Department must contain only letters.";
+            }
+            else {
+                departmentError.textContent = "";
+            }
+
+        });
+
+        // ✅ Validate on submit
+        form.addEventListener("submit", function (event) {
+
+            const value = departmentInput.value.trim();
+
+            if (value === "" || value.length < 3 || !isValidDepartment(value)) {
+                event.preventDefault();
+                departmentError.textContent = "Enter a valid department name.";
+            }
+
+        });
+
+        });
+    </script>
+    <!-- designation error -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+        const form = document.querySelector("form");
+        const designationInput = document.getElementById("designation");
+        const designationError = document.getElementById("designationError");
+
+        // Only letters and spaces allowed
+        function isValidDesignation(value) {
+            const pattern = /^[A-Za-z\s]+$/;
+            return pattern.test(value);
+        }
+
+        // ✅ Validate when leaving field
+        designationInput.addEventListener("blur", function () {
+
+            const value = designationInput.value.trim();
+
+            if (value === "") {
+                designationError.textContent = "Designation is required.";
+                designationInput.focus();
+            }
+            // else if (value.length < 3) {
+            //     designationError.textContent = "Designation must be at least 3 characters.";
+            // }
+            else if (!isValidDesignation(value)) {
+                designationError.textContent = "Designation must contain only letters.";
+                designationInput.focus();
+            }
+            else {
+                designationError.textContent = "";
+            }
+
+        });
+
+        // ✅ Validate on submit
+        form.addEventListener("submit", function (event) {
+
+            const value = designationInput.value.trim();
+
+            if (value === "" || value.length < 3 || !isValidDesignation(value)) {
+                event.preventDefault();
+                designationError.textContent = "Enter a valid designation name.";
+            }
+
+        });
+
+        });
+    </script>
+    <!-- emp code eror -->
+    <script>
+        const empCodeInput = document.getElementById("emp_code");
+        const empCodeError = document.getElementById("empCodeError");
+
+        // Letters + numbers only
+        function isValidEmpCode(value) {
+            const pattern = /^[A-Za-z0-9]+$/;
+            return pattern.test(value);
+        }
+
+        // Validate on blur
+        empCodeInput.addEventListener("blur", function () {
+
+            const value = empCodeInput.value.trim();
+
+            if (value === "") {
+                empCodeError.textContent = "Employee Code is required.";
+            }
+            // else if (value.length < 3) {
+            //     empCodeError.textContent = "Employee Code must be at least 3 characters.";
+            // }
+            else if (!isValidEmpCode(value)) {
+                empCodeError.textContent = "Employee Code must contain only letters and numbers.";
+            }
+            else {
+                empCodeError.textContent = "";
+            }
+
+        });
+
+        // Validate on submit
+        form.addEventListener("submit", function (event) {
+
+            const value = empCodeInput.value.trim();
+
+            if (value === "" || value.length < 3 || !isValidEmpCode(value)) {
+                event.preventDefault();
+                empCodeError.textContent = "Enter a valid Employee Code.";
+            }
+
+        });
+    </script>
+    <!-- state error -->
+    <script>
+        const stateInput = document.getElementById("state");
+        const stateError = document.getElementById("stateError");
+
+        // Only letters and spaces allowed
+        function isValidState(value) {
+            const pattern = /^[A-Za-z\s]+$/;
+            return pattern.test(value);
+        }
+
+        // Validate on blur
+        stateInput.addEventListener("blur", function () {
+
+            const value = stateInput.value.trim();
+
+            if (value === "") {
+                stateError.textContent = "State is required.";
+            }
+            else if (!isValidState(value)) {
+                stateError.textContent = "State must contain only letters.";
+            }
+            else if (value.length < 3) {
+                stateError.textContent = "State must be at least 3 characters.";
+            }
+            
+            else {
+                stateError.textContent = "";
+            }
+
+        });
+
+        // Validate on submit
+        form.addEventListener("submit", function (event) {
+
+            const value = stateInput.value.trim();
+
+            if (value === "" || value.length < 3 || !isValidState(value)) {
+                event.preventDefault();
+                stateError.textContent = "Enter a valid state name.";
+            }
+
+        });
+    </script>
+    <!-- district error -->
+    <script>
+        const districtInput = document.getElementById("district");
+        const districtError = document.getElementById("districtError");
+
+        // Only letters and spaces allowed
+        function isValidDistrict(value) {
+            const pattern = /^[A-Za-z\s]+$/;
+            return pattern.test(value);
+        }
+
+        // Validate on blur
+        districtInput.addEventListener("blur", function () {
+
+            const value = districtInput.value.trim();
+
+            if (value === "") {
+                districtError.textContent = "District is required.";
+            }
+            else if (!isValidDistrict(value)) {
+                districtError.textContent = "District must contain only letters.";
+            }
+            else if (value.length < 3) {
+                districtError.textContent = "District must be at least 3 characters.";
+            }  
+            else {
+                districtError.textContent = "";
+            }
+
+        });
+
+        // Validate on submit
+        form.addEventListener("submit", function (event) {
+
+            const value = districtInput.value.trim();
+
+            if (value === "" || value.length < 3 || !isValidDistrict(value)) {
+                event.preventDefault();
+                districtError.textContent = "Enter a valid district name.";
+            }
+
+        });
+    </script>
+    <!-- city error -->
+    <script>
+        const cityInput = document.getElementById("city");
+        const cityError = document.getElementById("cityError");
+
+        // Allow letters and spaces only
+        function isValidCity(value) {
+            const pattern = /^[A-Za-z\s]+$/;
+            return pattern.test(value);
+        }
+
+        // Validate on blur
+        cityInput.addEventListener("blur", function () {
+
+            const value = cityInput.value.trim();
+
+            if (value === "") {
+                cityError.textContent = "City is required.";
+            }
+            else if (!isValidCity(value)) {
+                cityError.textContent = "City must contain only letters.";
+            }
+            else if (value.length < 3) {
+                cityError.textContent = "City must be at least 3 characters.";
+            }
+            else {
+                cityError.textContent = "";
+            }
+
+        });
+
+        // Validate on submit
+        form.addEventListener("submit", function (event) {
+
+            const value = cityInput.value.trim();
+
+            if (value === "" || value.length < 3 || !isValidCity(value)) {
+                event.preventDefault();
+                cityError.textContent = "Enter a valid city name.";
+            }
+
+        });
+    </script>
+    <!-- place error -->
+    <script>
+        const placeInput = document.getElementById("place");
+        const placeError = document.getElementById("placeError");
+
+        // Allow letters and spaces only
+        function isValidPlace(value) {
+            const pattern = /^[A-Za-z\s]+$/;
+            return pattern.test(value);
+        }
+
+        // Validate on blur
+        placeInput.addEventListener("blur", function () {
+
+            const value = placeInput.value.trim();
+
+            if (value === "") {
+                placeError.textContent = "Place is required.";
+            }
+            else if (!isValidPlace(value)) {
+                placeError.textContent = "Place must contain only letters.";
+            }
+            else if (value.length < 3) {
+                placeError.textContent = "Place must be at least 3 characters.";
+            }
+            else {
+                placeError.textContent = "";
+            }
+
+        });
+
+        // Validate on submit
+        form.addEventListener("submit", function (event) {
+
+            const value = placeInput.value.trim();
+
+            if (value === "" || value.length < 3 || !isValidPlace(value)) {
+                event.preventDefault();
+                placeError.textContent = "Enter a valid place name.";
+            }
+
+        });
+    </script>
+
+</body>
+</html>

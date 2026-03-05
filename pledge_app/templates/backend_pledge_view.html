@@ -1,0 +1,260 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'pledge_app/fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'pledge_app/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pledge_app/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pledge_app/css/style.css' %}">
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
+        integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q="
+        crossorigin="anonymous"
+        media="print"
+        onload="this.media='all'"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'pledge_app/css/adminlte.css'}" />
+<style>
+.content-wrapper {
+    padding-top: 10px !important;
+}
+</style>
+</head>
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+<div class="wrapper">
+
+    <aside class="sidebar">
+      <div class="toggle">
+        <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
+              <span></span>
+        </a>
+      </div>
+      <div class="side-inner">
+        <div class="logo-wrap">
+          <div class="logo">
+            <span>OP</span>
+          </div>
+          <span class="logo-text">Online Pledge</span>
+        </div>
+          
+        <div class="search-form">
+          <form action="#">
+            <span class="wrap-icon">
+              <span class="icon-search2"></span>
+            </span>
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+        <div class="nav-menu">
+          <ul>
+          <li class="{% if request.resolver_match.url_name == 'admins' %}active{% endif %}">
+          <a href="{% url 'admins' %}" class="d-flex align-items-center">
+          <span class="wrap-icon icon-videocam mr-3"></span>
+          <span class="menu-text">Admins</span>
+          </a>
+          </li>
+
+          <li class="{% if request.resolver_match.url_name == 'backend_pledges' %}active{% endif %}">
+          <a href="{% url 'backend_pledges' %}" class="d-flex align-items-center">
+          <span class="wrap-icon icon-home2 mr-3"></span>
+          <span class="menu-text">Backend Pledges</span>
+          </a>
+          </li>
+
+          <li class="{% if request.resolver_match.url_name == 'pledges' %}active{% endif %}">
+          <a href="{% url 'pledges' %}" class="d-flex align-items-center">
+          <span class="wrap-icon icon-home2 mr-3"></span>
+          <span class="menu-text">Pledge List</span>
+          </a>
+          </li>
+            
+            
+          <li><a href="#" class="d-flex align-items-center"><span class="wrap-icon icon-shopping-cart mr-3"></span><span class="menu-text">Store</span></a></li>
+            
+          <li><a href="#" class="d-flex align-items-center"><span class="wrap-icon icon-pie-chart mr-3"></span><span class="menu-text">Analytics</span></a></li>
+
+          <li class="{% if request.resolver_match.url_name == 'profile_logout' %}active{% endif %}">
+          <a href="{% url 'profile_logout' %}" class="d-flex align-items-center">
+            <span class="wrap-icon icon-home2 mr-3"></span>
+            <span class="menu-text">Logout</span>
+          </a>
+        </li>  
+          </ul>
+        </div>
+      </div>
+      
+    </aside>
+    <div class="card card-primary card-outline mb-4">
+             <div class="row justify-content-center"></div>    
+                  <!--begin::Form-->
+                  <form>
+                    <!--begin::Body-->
+                    <div class="card-body">
+                      <!-- <div class="mb-3"> -->
+                        <!-- name -->
+                         <h1 class="mb-2 mt-0">Pledge Details</h1> 
+                         <br>
+                        <label for="exampleInputEmail1" class="form-label">Pledge Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          style="width: 498px;"
+                          value="{{ pledge.pledgeName|striptags }}"
+                          readonly
+                        />
+                        <br>
+                        <!-- email -->
+                        <label class="form-label">Pledge Text</label>
+
+                        <textarea 
+                            class="form-control" 
+                            rows="8" 
+                            style="width: 500px;"
+                            readonly>{{ pledge.pledgeText|striptags|cut:"&nbsp;" }}</textarea>
+                                                <br>
+
+                                                <!-- tamil pledge Text -->
+<label class="form-label">Tamil Pledge Text</label>
+
+                        <textarea 
+                            class="form-control" 
+                            rows="8" 
+                            style="width: 500px;"
+                            readonly>{{ pledge.tamilPledgeText|striptags }}</textarea>
+                                                <br>
+
+
+                                                <!-- hindi pledge -->
+                                                 <label class="form-label">Hindi Pledge Text</label>
+
+                        <textarea 
+                            class="form-control" 
+                            rows="8" 
+                            style="width: 500px;"
+                            readonly>{{ pledge.hindiPledgeText|striptags }}</textarea>
+                                                <br>
+
+
+
+                                                <label>LOGO - 1</label>
+                        <br>
+                      {% if pledge.logo1 %}
+                          <img src="{{ pledge.logo1.url }}" alt="Logo" width="120" height="120">
+                      {% endif %}                        <br>
+                        <br>
+
+                        <label>LOGO - 2</label>
+                        <br>
+                      {% if pledge.logo2 %}
+
+                        <img src="{{pledge.logo2.url}}" alt="Logo" width="120" height="120">
+                      {% endif %}                        <br>
+                       
+                        <br>
+                        <br>
+
+                        <label>LOGO - 3</label>
+                        <br>
+                      {% if pledge.logo3 %}
+
+                        <img src="{{pledge.logo3.url}}" alt="Logo" width="120" height="120">
+                      {% endif %}                        <br>
+                       
+                        <br>
+                        <br>
+
+                        <label class="form-label">Checkbox Text</label>
+                      <textarea 
+                            class="form-control" 
+                            rows="4" 
+                            style="width: 500px;"
+                            readonly>{{ pledge.checkboxText|striptags }}</textarea>
+                                                <br>
+                        <br>
+                         <!-- emp code
+                        <label class="form-label">Language</label>
+                        <input
+                          type="text"
+                          class="form-control" style="width: 498px;"
+                          id="exampleInputEmail1"
+                          aria-describedby="emailHelp" value={{pledge.language}} readonly
+                        /> -->
+                        <br>
+                        <div>
+<a href="{% url 'backend_pledges' %}" class="btn btn-secondary">
+    Back
+</a>                        </div>
+
+                      
+                    </div>
+                    <!--end::Body-->
+                    <!--begin::Footer-->
+                    <div class="card-footer">
+                    </div>
+                    <!--end::Footer-->
+                  </form>
+                  <!--end::Form-->
+    </div>
+    
+    <!-- jQuery FIRST -->
+    <script src="{% static 'pledge_app/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'pledge_app/js/popper.min.js' %}"></script>
+    <script src="{% static 'pledge_app/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'pledge_app/js/main.js' %}"></script>
+<script
+      src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
+    <script src="{% static 'pledge_app/js/adminlte.js' %}"></script>
+    <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
+   <script>
+      const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
+      const Default = {
+        scrollbarTheme: 'os-theme-light',
+        scrollbarAutoHide: 'leave',
+        scrollbarClickScroll: true,
+      };
+      document.addEventListener('DOMContentLoaded', function () {
+        const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+        if (sidebarWrapper && OverlayScrollbarsGlobal?.OverlayScrollbars !== undefined) {
+          OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+            scrollbars: {
+              theme: Default.scrollbarTheme,
+              autoHide: Default.scrollbarAutoHide,
+              clickScroll: Default.scrollbarClickScroll,
+            },
+          });
+        }
+      });
+    </script>
+</body>
+</html>
